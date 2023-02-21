@@ -66,6 +66,30 @@ class User(Admin):
         self.password = password
         self.orders = []
 
+    def login(self):
+        input_username = input("Enter your username: ")
+        input_password = input("Enter your password: ")
+        if input_username == self.full_name and input_password == self.password:
+            print("Login Successful!")
+            return True
+        else:
+            print("Incorrect Password.")
+            while True:
+                option = input("Do you want to try again? (Y/N)").upper()
+                if option == "Y":
+                    input_username = input("Enter your username: ")
+                    input_password = input("Enter your password: ")
+                    if input_username == self.full_name and input_password == self.password:
+                        print("Login Successful!")
+                        return True
+                    else:
+                        print("Incorrect Password.")
+                elif option == "N":
+                    print("Exiting...")
+                    return False
+                else:
+                    print("Invalid option. Please try again.")
+
     def place_new_order(self, food_ids):
         total_cost = 0
         selected_items = []
@@ -126,12 +150,21 @@ admin.view_food_items()
 # Removing a food item
 admin.remove_food_item(1)
 
-user1 = User()
 
-user1.init("John Doe", "1234567890", "johndoe@gmail.com", "123, Main Street", "password")
+user1 = User()   # create a user object
+user1.init("Nagendra", "9740450171", "prasadrnag@gmail.com", "123, kolar ", "1234")
+
+# user login with username and Possword
+if user1.login():
+    print("Welcome, " + user1.full_name)
+else:
+    print("Please enter the correct username and password.")
+
+#  Place New Order,order history and detials of user
+user1.place_new_order([2, 3])                 # select food by entering an array of numbers
+user1.order_history() 
 print(f"Name: {user1.full_name}, Phone Number: {user1.phone_number}, Email: {user1.email}, Address: {user1.address}, Password: {user1.password}")
 
-user1.place_new_order([2, 3])
-user1.order_history() 
-user1.update_profile(full_name="Jane Doe", email="jane.doe@example.com")
+# user profile update
+user1.update_profile(full_name="prasad", email="prasad.nag@example.com")
 
